@@ -11,6 +11,3 @@
     name: "{{ app_name }}"
     deb: "{{ app_name_deb }}"
     state: "{{ app_name_desired_state }}"
-    force_apt_get: yes
-    update_cache: yes
-    
