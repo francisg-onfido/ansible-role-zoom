@@ -1,133 +1,89 @@
-# Ansible Role: zoom
-[![Role gotmax23.zoom][badge-role]][link-galaxy]
-[![Github Repo][badge-github-repo]][link-github-repo]
-[![SourceHut Repo][badge-srht-repo]][link-srht-repo]
-[![MIT Licensed][badge-license]][link-license]
-[![Github Open Issues][badge-github-issues]][link-github-issues]
-[![Github Open PRs][badge-github-prs]][link-github-prs]
-[![Role Version][badge-version]][link-version]
-[![Commits since last version][badge-commits-since]][link-version]
-[![Galaxy Role Quality][badge-quality]][link-galaxy]
-[![Galaxy Role Downloads][badge-downloads]][link-galaxy]
-[![Github Actions Molecule workflow status][badge-molecule-workflow]][link-molecule-workflow]
-[![Github Actions Galaxy workflow status][badge-galaxy-workflow]][link-galaxy-workflow]
+[![build-test](https://github.com/darkwizard242/ansible-role-googlechrome/workflows/build-and-test/badge.svg?branch=master)](https://github.com/darkwizard242/ansible-role-googlechrome/actions?query=workflow%3Abuild-and-test) [![release](https://github.com/darkwizard242/ansible-role-googlechrome/workflows/release/badge.svg)](https://github.com/darkwizard242/ansible-role-googlechrome/actions?query=workflow%3Arelease) ![Ansible Role](https://img.shields.io/ansible/role/43354?color=dark%20green%20) ![Ansible Role](https://img.shields.io/ansible/role/d/43354?label=role%20downloads) ![Ansible Quality Score](https://img.shields.io/ansible/quality/43354?label=ansible%20quality%20score) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ansible-role-googlechrome&metric=alert_status)](https://sonarcloud.io/dashboard?id=ansible-role-googlechrome) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ansible-role-googlechrome&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=ansible-role-googlechrome) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=ansible-role-googlechrome&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=ansible-role-googlechrome) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=ansible-role-googlechrome&metric=security_rating)](https://sonarcloud.io/dashboard?id=ansible-role-googlechrome) ![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/darkwizard242/ansible-role-googlechrome?label=release) ![GitHub repo size](https://img.shields.io/github/repo-size/darkwizard242/ansible-role-googlechrome?color=orange&style=flat-square)
 
-Ansible role that installs the Zoom client on Linux.
+# Ansible Role: googlechrome
 
-## Beta Warning
-**This role is currently in beta and is not intended for production use. Breaking changes may occur between releases, so please make sure to read the release notes.**
+Role to install (_by default_) [google-chrome-stable](https://www.google.com/chrome/) package for Debian based and EL based systems or uninstall (_if passed as var_) on **Debian** based and **EL** based systems.
+
 ## Requirements
 
-This role depends on certain collections that are not included in ansible-core.
-
-
-To install this role's requirements, create a `requirements.yml` file with the following contents:
-
-``` yaml
-# SPDX-FileCopyrightText: 2021 Maxwell G (@gotmax23)
-# SPDX-License-Identifier: CC0-1.0
----
-collections:
-  - name: community.general
-
-```
-
-Then, if you are using ansible-base/ansible-core 2.10 or later, run this command.
-
-``` shell
-ansible-galaxy install -r requirements.yml
-```
-
-
-If you are still using Ansible 2.9, run this command, instead.
-
-``` shell
-ansible-galaxy collection install -r requirements.yml
-```
+None.
 
 ## Role Variables
 
-Here are this role's variables and their default values, as set in [`defaults/main.yml`][link-defaults]. If you'd like, you may change them to customize this role's behavior.
+Available variables are listed below (located in `defaults/main.yml`):
 
-``` yaml
-# SPDX-FileCopyrightText: 2021 Maxwell G (@gotmax23)
-# SPDX-License-Identifier: CC0-1.0
----
-# Options:
-# - `present` ensures that Zoom is installed.
-# - `absent` ensures that Zoom is not installed.
-zoom_state: present
+### Variables list:
 
-# This option dictates whether to check zoom's rpm key fingerprint.
-zoom_check_rpm_key: true
-
-# This variable dictates where this role will download the Zoom pacman pkg archive.
-# This only applies to Archlinux.
-zoom_pacman_pkg_download_dir: /opt
-
+```yaml
+googlechrome_app: google-chrome-stabl
+googlechrome_desired_state: present
+googlechrome_gpg_key: https://dl.google.com/linux/linux_signing_key.pub
+googlechrome_repo_desired_state: present
+googlechrome_repo_debian: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+googlechrome_repo_debian_filename: google-chrome
+googlechrome_repo_el: http://dl.google.com/linux/chrome/rpm/stable/x86_64
+googlechrome_repo_el_name: google-chrome
+googlechrome_repo_el_description: google-chrome
+googlechrome_repo_el_gpgcheck: yes
+googlechrome_repo_el_enabled: yes
+googlechrome_repo_el_filename: google-chrome
 ```
+
+### Variables table:
+
+Variable                          | Value (default)                                                       | Description
+--------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------
+googlechrome_app                  | `google-chrome-stable`                                                | Defines the app to install i.e. **google-chrome-stable**
+googlechrome_desired_state        | `present`                                                             | Defined to dynamically set whether to install (i.e. either `present` or `latest`) or uninstall (i.e. `absent`) the package. Defaults to `present`
+googlechrome_gpg_key              | <https://dl.google.com/linux/linux_signing_key.pub>                   | GPG key for Google Chrome
+googlechrome_repo_desired_state   | `present`                                                             | State for repo to download Google Chrome from. Can either be 'present' or 'absent'.
+googlechrome_repo_debian          | `deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main` | Google Chrome's repo link for Debian based systems.
+googlechrome_repo_debian_filename | `google-chrome`                                                       | Name of file to save for googlechrome's repo in `/etc/apt/sources.list.d/`
+googlechrome_repo_el              | <http://dl.google.com/linux/chrome/rpm/stable/x86_64>                 | Google Chrome's repo link for EL based systems.
+googlechrome_repo_el_name         | `google-chrome`                                                       | Google Chrome repo name for EL based systems.
+googlechrome_repo_el_description  | `google-chrome`                                                       | Description for Google Chrome's repo for EL based systems.
+googlechrome_repo_el_gpgcheck     | **yes**                                                               | Boolean operation for performing gpg check against gpg key. Can either be **yes** or **no**.
+googlechrome_repo_el_enabled      | **yes**                                                               | Boolean operation for setting repository to enabled or disabled. Can either be **yes** or **no**.
+googlechrome_repo_el_filename     | `google-chrome`                                                       | Name of file to save for googlechrome's repo in `/etc/yum.repos.d/`
+
+## Dependencies
+
+None
 
 ## Example Playbook
-``` yaml
-# SPDX-FileCopyrightText: 2021 Maxwell G (@gotmax23)
-# SPDX-License-Identifier: CC0-1.0
----
-- name: Install zoom
-  hosts: all
-  become: true
 
-  tasks:
-    - name: Update apt cache
-      when: ansible_pkg_mgr == "apt"
-      ansible.builtin.apt:
-        update_cache: true
-        cache_valid_time: 3600
+For default behaviour of role (i.e. installation of **google-chrome-stable** package) in ansible playbooks.
 
-    - name: Install zoom
-      ansible.builtin.include_role:
-        name: "gotmax23.zoom"
-
+```yaml
+- hosts: servers
+  roles:
+    - darkwizard242.googlechrome
 ```
 
-## Compatibility
-This role is tested using the latest version of ansible-core and the latest version of the collections from Ansible Galaxy. This is the only version of Ansible that this role officially supports. Best effort support is provided for other versions.
+For customizing behavior of role (i.e. installation of latest **google-chrome-stable** package) in ansible playbooks.
 
-This role is compatible with the following distros:
+```yaml
+- hosts: servers
+  roles:
+    - darkwizard242.googlechrome
+  vars:
+    googlechrome_desired_state: latest
+```
 
-|distro|versions|
-|------|--------|
-|Archlinux|any|
-|Debian|buster, bullseye, bookworm|
-|EL|7, 8|
-|Fedora|34, 35, 36|
-|opensuse|15.2, 15.3, tumbleweed|
-|Ubuntu|bionic, focal|
+For customizing behavior of role (i.e. un-installation of **google-chrome-stable** package) in ansible playbooks.
+
+```yaml
+- hosts: servers
+  roles:
+    - darkwizard242.googlechrome
+  vars:
+    googlechrome_desired_state: absent
+```
 
 ## License
-[MIT][link-license]
 
-## Author
-Maxwell G (@gotmax23)
+[MIT](https://github.com/darkwizard242/ansible-role-googlechrome/blob/master/LICENSE)
 
-[badge-role]: https://img.shields.io/ansible/role/56753.svg?logo=ansible
-[link-galaxy]: https://galaxy.ansible.com/gotmax23/zoom
-[badge-github-repo]: https://img.shields.io/static/v1?label=GitHub&message=repo&color=blue&logo=github
-[link-github-repo]: https://github.com/gotmax23/ansible-role-zoom
-[badge-srht-repo]: https://img.shields.io/static/v1?label=SourceHut&message=repo&color=blue&logo=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgdmlld0JveD0iMCAwIDUxMiA1MTIiCiAgIHZlcnNpb249IjEuMSIKICAgaWQ9InN2ZzUxIgogICBzb2RpcG9kaTpkb2NuYW1lPSJzb3VyY2VodXQtd2hpdGUuc3ZnIgogICBpbmtzY2FwZTp2ZXJzaW9uPSIxLjEgKGM2OGUyMmMzODcsIDIwMjEtMDUtMjMpIgogICB4bWxuczppbmtzY2FwZT0iaHR0cDovL3d3dy5pbmtzY2FwZS5vcmcvbmFtZXNwYWNlcy9pbmtzY2FwZSIKICAgeG1sbnM6c29kaXBvZGk9Imh0dHA6Ly9zb2RpcG9kaS5zb3VyY2Vmb3JnZS5uZXQvRFREL3NvZGlwb2RpLTAuZHRkIgogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxkZWZzCiAgICAgaWQ9ImRlZnM1NSIgLz4KICA8c29kaXBvZGk6bmFtZWR2aWV3CiAgICAgaWQ9Im5hbWVkdmlldzUzIgogICAgIHBhZ2Vjb2xvcj0iIzUwNTA1MCIKICAgICBib3JkZXJjb2xvcj0iI2ZmZmZmZiIKICAgICBib3JkZXJvcGFjaXR5PSIxIgogICAgIGlua3NjYXBlOnBhZ2VzaGFkb3c9IjAiCiAgICAgaW5rc2NhcGU6cGFnZW9wYWNpdHk9IjAiCiAgICAgaW5rc2NhcGU6cGFnZWNoZWNrZXJib2FyZD0iMSIKICAgICBzaG93Z3JpZD0iZmFsc2UiCiAgICAgaW5rc2NhcGU6em9vbT0iMS42NTQyOTY5IgogICAgIGlua3NjYXBlOmN4PSIyNTYiCiAgICAgaW5rc2NhcGU6Y3k9IjI1NiIKICAgICBpbmtzY2FwZTp3aW5kb3ctd2lkdGg9IjE5MjAiCiAgICAgaW5rc2NhcGU6d2luZG93LWhlaWdodD0iMTA1OSIKICAgICBpbmtzY2FwZTp3aW5kb3cteD0iMCIKICAgICBpbmtzY2FwZTp3aW5kb3cteT0iMCIKICAgICBpbmtzY2FwZTp3aW5kb3ctbWF4aW1pemVkPSIxIgogICAgIGlua3NjYXBlOmN1cnJlbnQtbGF5ZXI9InN2ZzUxIiAvPgogIDxwYXRoCiAgICAgZD0iTTI1NiA4QzExOSA4IDggMTE5IDggMjU2czExMSAyNDggMjQ4IDI0OCAyNDgtMTExIDI0OC0yNDhTMzkzIDggMjU2IDh6bTAgNDQ4Yy0xMTAuNSAwLTIwMC04OS41LTIwMC0yMDBTMTQ1LjUgNTYgMjU2IDU2czIwMCA4OS41IDIwMCAyMDAtODkuNSAyMDAtMjAwIDIwMHoiCiAgICAgaWQ9InBhdGg0OSIKICAgICBzdHlsZT0iZmlsbDojZmZmZmZmIiAvPgo8L3N2Zz4K
-[link-srht-repo]: https://git.sr.ht/~gotmax23/ansible-role-zoom
-[badge-license]: https://img.shields.io/github/license/gotmax23/ansible-role-zoom.svg?logo=github
-[link-license]: https://github.com/gotmax23/ansible-role-zoom/blob/main/LICENSE
-[badge-github-issues]: https://img.shields.io/github/issues/gotmax23/ansible-role-zoom.svg?logo=github
-[link-github-issues]: https://github.com/gotmax23/ansible-role-zoom/issues
-[badge-github-prs]: https://img.shields.io/github/issues-pr/gotmax23/ansible-role-zoom.svg?logo=github
-[link-github-prs]: https://github.com/gotmax23/ansible-role-zoom/pulls
-[badge-version]: https://img.shields.io/github/release/gotmax23/ansible-role-zoom.svg?logo=github
-[link-version]: https://github.com/gotmax23/ansible-role-zoom/releases/latest
-[badge-commits-since]: https://img.shields.io/github/commits-since/gotmax23/ansible-role-zoom/latest.svg?logo=github
-[badge-quality]: https://img.shields.io/ansible/quality/56753.svg?logo=ansible
-[badge-downloads]: https://img.shields.io/ansible/role/d/56753.svg?logo=ansible
-[badge-molecule-workflow]: https://github.com/gotmax23/ansible-role-zoom/actions/workflows/molecule.yml/badge.svg?branch=main
-[link-molecule-workflow]: https://github.com/gotmax23/ansible-role-zoom/actions/workflows/molecule.yml
-[badge-galaxy-workflow]: https://github.com/gotmax23/ansible-role-zoom/actions/workflows/galaxy.yml/badge.svg
-[link-galaxy-workflow]: https://github.com/gotmax23/ansible-role-zoom/actions/workflows/galaxy.yml
-[link-defaults]: https://github.com/gotmax23/ansible-role-zoom/blob/main/defaults/main.yml
+## Author Information
+
+This role was created by [Ali Muhammad](https://www.alimuhammad.dev/).

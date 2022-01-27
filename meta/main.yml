@@ -1,49 +1,32 @@
-# SPDX-FileCopyrightText: 2021 Maxwell G (@gotmax23)
-# SPDX-License-Identifier: MIT
 ---
 galaxy_info:
   role_name: zoom
-
-  author: gotmax23
-
-  description: Ansible role that installs the Zoom client on Linux.
-
+  author: francisg_onfido
+  description: Zoom latest version installation or uninstallation in Debian/EL based systems with amd64 architecture.
+  company: none
   license: MIT
-
-  min_ansible_version: 2.11
+  min_ansible_version: 2.4
 
   platforms:
-    - name: Archlinux
+    - name: Ubuntu
       versions:
-        - any
+        - xenial
+        - bionic
+        - focal
     - name: Debian
       versions:
+        - stretch
         - buster
-        - bullseye
-        - bookworm
     - name: EL
       versions:
         - 7
         - 8
-    - name: Fedora
-      versions:
-        - 34
-        - 35
-        - 36
-    - name: opensuse
-      versions:
-        - all
-    - name: Ubuntu
-      versions:
-        - bionic
-        - focal
 
   galaxy_tags:
     - zoom
-    - communication
-    - desktop
-    - linux
-    - video
-
+    - os
+    - system
+    - web
+    - browsers
 
 dependencies: []
