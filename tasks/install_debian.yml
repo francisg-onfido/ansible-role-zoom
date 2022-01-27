@@ -8,6 +8,5 @@
     
 - name: Debian/Ubuntu Family | Installing {{ app_name }}
   apt:
-    name: "{{ app_name }}"
     deb: "{{ app_name_deb }}"
     state: "{{ app_name_desired_state }}"
